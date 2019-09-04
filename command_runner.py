@@ -56,9 +56,9 @@ def pprint(json_data):
 def get_dnac_jwt_token(dnac_auth):
     """
     Create the authorization token required to access Cisco DNA Center
-    Call to Cisco DNA C - /api/system/v1/auth/login
+    Call to Cisco DNA Center - /api/system/v1/auth/login
     :param dnac_auth - Cisco DNA Center Basic Auth string
-    :return Cisco DNA Center Auth Token
+    :return Cisco DNA Center Token
     """
     url = DNAC_URL + '/dna/system/api/v1/auth/token'
     header = {'content-type': 'application/json'}
@@ -86,7 +86,7 @@ def get_device_id_name(device_name, dnac_jwt_token):
     This function will find the Cisco DNA Center device id for the device with the name {device_name}
     :param device_name: device hostname
     :param dnac_jwt_token: Cisco DNA Center token
-    :return:
+    :return: Cisco DNA Center device id
     """
     device_id = None
     device_list = get_all_device_info(dnac_jwt_token)
@@ -98,9 +98,9 @@ def get_device_id_name(device_name, dnac_jwt_token):
 
 def get_legit_cli_command_runner(dnac_jwt_token):
     """
-    This function will get all the legit CLI commands supported by the {command runner} APIs
-    :param dnac_jwt_token: Cisco DNA Centertoken
-    :return: list of CLI commands
+    This function will get all the legit CLI commands supported by the {command runner} API
+    :param dnac_jwt_token: Cisco DNA Center token
+    :return: list of supported CLI commands
     """
     url = DNAC_URL + '/dna/intent/api/v1/network-device-poller/cli/legit-reads'
     header = {'content-type': 'application/json', 'x-auth-token': dnac_jwt_token}
@@ -112,9 +112,9 @@ def get_legit_cli_command_runner(dnac_jwt_token):
 
 def get_content_file_id(file_id, dnac_jwt_token):
     """
-    This function will download a file specified by the {file_id}
+    This function will download the file specified by the {file_id}
     :param file_id: file id
-    :param dnac_jwt_token: Cisco DNA Centertoken
+    :param dnac_jwt_token: Cisco DNA Center token
     :return: file
     """
     url = DNAC_URL + '/dna/intent/api/v1/file/' + file_id
@@ -130,14 +130,14 @@ def get_output_command_runner(command, device_name, dnac_jwt_token):
     hostname {device}
     :param command: CLI command
     :param device_name: device hostname
-    :param dnac_jwt_token: Cisco DNA Centertoken
+    :param dnac_jwt_token: Cisco DNA Center token
     :return: file with the command output
     """
 
     # get the Cisco DNA Center device id
     device_id = get_device_id_name(device_name, dnac_jwt_token)
 
-    # get the Cisco DNA Centertask id that will process the CLI command runner
+    # get the Cisco DNA Center task id that will execute the CLI command runner
     payload = {
         "commands": [command],
         "deviceUuids": [device_id],
@@ -149,7 +149,6 @@ def get_output_command_runner(command, device_name, dnac_jwt_token):
     response_json = response.json()
     task_id = response_json['response']['taskId']
 
-    time.sleep(5)  # wait 5 seconds for the command to be executed
     # get task id status
     task_result = check_task_id_output(task_id, dnac_jwt_token)
     file_info = json.loads(task_result['progress'])
@@ -183,6 +182,8 @@ def check_task_id_output(task_id, dnac_jwt_token):
             task_response = requests.get(url, headers=header, verify=False)
             task_json = task_response.json()
             task_output = task_json['response']
+            # check if file id available in output
+            file_info = json.loads(task_output['progress'])
             completed = 'yes'
         except:
             time.sleep(1)
@@ -191,9 +192,14 @@ def check_task_id_output(task_id, dnac_jwt_token):
 
 def main(command, device_hostname):
     """
-    This sample script will:
-    - needs description
-
+    This sample script will execute one CLI command {command} on the device {device_hostname}:
+    - obtain a Cisco DNA Center auth token
+    - retrieve the list of commands keywords supported by Cisco DNA Center
+    - identify if the command is supported
+    - execute the command on the specified device
+    - retrieve the file with the command output
+    :param command: the CLI command
+    :param device_hostname: the device hostname to execute the CLI command
     """
 
     # obtain the Cisco DNA Center Auth Token
@@ -211,9 +217,11 @@ def main(command, device_hostname):
     cli_command_keyword = command.split(' ')[0]
 
     if cli_command_keyword in cli_commands_list:
-        print('\nThe desired command "' + command + '" is supported')
+        print('\nThe command "' + command + '" is supported')
         command_output = get_output_command_runner(command, device_hostname, dnac_token)
-        print(command_output)
+        print('\nThe command output from the device: ' + device_hostname + '\n', command_output)
+    else:
+        print('\nThe command "' + command + '" is not supported')
 
     print('\n\nEnd of Application "command_runner.py" Run')
 
