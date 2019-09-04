@@ -148,12 +148,10 @@ def get_output_command_runner(command, device_name, dnac_jwt_token):
     response = requests.post(url, data=json.dumps(payload), headers=header, verify=False)
     response_json = response.json()
     task_id = response_json['response']['taskId']
-    print('Task id ', task_id)
 
     time.sleep(5)  # wait 5 seconds for the command to be executed
     # get task id status
     task_result = check_task_id_output(task_id, dnac_jwt_token)
-    print(task_result)
     file_info = json.loads(task_result['progress'])
     file_id = file_info['fileId']
 
