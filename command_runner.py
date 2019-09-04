@@ -194,7 +194,7 @@ def check_task_id_output(task_id, dnac_jwt_token):
 def main(command, device_hostname):
     """
     This sample script will:
-    -
+    - needs description
 
     """
 
