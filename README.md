@@ -25,7 +25,7 @@ This sample script will execute one CLI command {command} on the device {device_
 Example:
 python3 command_runner.py "show run int gi0/0" "PDX-9300"
 
-Sample Output:
+- Sample Output:
 
 The command "show run int gi0/0" is supported
 
@@ -51,5 +51,4 @@ End of Application "command_runner.py" Run
 
 **License**
 
-This project is licensed to you under the terms of the [Cisco Sample
-Code License](./LICENSE).
+This project is licensed to you under the terms of the [Cisco Sample Code License](./LICENSE).
