@@ -219,7 +219,7 @@ def main(command, device_hostname):
     if cli_command_keyword in cli_commands_list:
         print('\nThe command "' + command + '" is supported')
         command_output = get_output_command_runner(command, device_hostname, dnac_token)
-        print('\nThe command output from the device: ' + device_hostname + '\n', command_output)
+        print('\nThe command output from the device: ' + device_hostname + '\n\n', command_output)
     else:
         print('\nThe command "' + command + '" is not supported')
 
