@@ -197,7 +197,7 @@ def main(command, device_hostname):
     - retrieve the list of commands keywords supported by Cisco DNA Center
     - identify if the command is supported
     - execute the command on the specified device
-    - retrieve the file with the command output
+    - download the file with the command output
     :param command: the CLI command
     :param device_hostname: the device hostname to execute the CLI command
     """
