@@ -213,7 +213,7 @@ def main(command, device_hostname):
     print('\nThe list of CLI commands keywords supported by Cisco DNA Center: \n')
     pprint(cli_commands_list)
 
-    # validate if the desired user command is supported
+    # validate if the desired command is supported
     cli_command_keyword = command.split(' ')[0]
 
     if cli_command_keyword in cli_commands_list:
