@@ -147,9 +147,15 @@ def get_output_command_runner(command, device_name, dnac_jwt_token):
     header = {'content-type': 'application/json', 'x-auth-token': dnac_jwt_token}
     response = requests.post(url, data=json.dumps(payload), headers=header, verify=False)
     response_json = response.json()
-    task_id = response_json['response']['taskId']
+    try:
+        task_id = response_json['response']['taskId']
+    except:
+        print('\n' + response_json['response']['detail'])
+        return
 
     # get task id status
+    # wait 1 second for the command runner task to be started
+    time.sleep(1)
     task_result = check_task_id_output(task_id, dnac_jwt_token)
     file_info = json.loads(task_result['progress'])
     file_id = file_info['fileId']
@@ -211,8 +217,8 @@ def main(command, device_hostname):
     # obtain all the supported commands
     cli_commands_list = get_legit_cli_command_runner(dnac_token)
 
-    print('\nThe list of CLI commands keywords supported by Cisco DNA Center: \n')
-    pprint(cli_commands_list)
+    # print('\nThe list of CLI commands keywords supported by Cisco DNA Center: \n')
+    # pprint(cli_commands_list)
 
     # validate if the desired command is supported
     cli_command_keyword = command.split(' ')[0]
@@ -224,7 +230,7 @@ def main(command, device_hostname):
     else:
         print('\nThe command "' + command + '" is not supported')
 
-    print('\n\nEnd of Application "command_runner.py" Run')
+    print('\n\nEnd of Application "command_runner.py" Run\n\n')
 
 
 if __name__ == "__main__":
