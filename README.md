@@ -22,12 +22,15 @@ This sample script will execute one CLI command {command} on the device {device_
  - identify if the command is supported
  - execute the command on the specified device
  - retrieve the file with the command output
-    
-- $ python command_runner.py "command" "device_hostname"
+
+Run the script using the command:
+
+$ python command_runner.py "command" "device_hostname"
+
 Example:
 python command_runner.py "show run int gi0/0" "PDX-9300"
 
-- Sample Output:
+**Sample Output**
 
 The command "show run int gi0/0" is supported
 
