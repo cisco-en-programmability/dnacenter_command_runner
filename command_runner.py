@@ -154,8 +154,8 @@ def get_output_command_runner(command, device_name, dnac_jwt_token):
         return
 
     # get task id status
-    # wait 1 second for the command runner task to be started
-    time.sleep(1)
+    # wait 2 second for the command runner task to be started
+    time.sleep(2)
     task_result = check_task_id_output(task_id, dnac_jwt_token)
     file_info = json.loads(task_result['progress'])
     file_id = file_info['fileId']
@@ -164,9 +164,9 @@ def get_output_command_runner(command, device_name, dnac_jwt_token):
     time.sleep(2)  # wait for 2 seconds for the file to be ready
     file_output = get_content_file_id(file_id, dnac_jwt_token)
     command_responses = file_output[0]['commandResponses']
-    if command_responses['SUCCESS'] is not {}:
+    if command_responses['SUCCESS'] != {}:
         command_output = command_responses['SUCCESS'][command]
-    elif command_responses['FAILURE'] is not {}:
+    elif command_responses['FAILURE'] != {}:
         command_output = command_responses['FAILURE'][command]
     else:
         command_output = command_responses['BLACKLISTED'][command]
@@ -224,7 +224,7 @@ def main(command, device_hostname):
     cli_command_keyword = command.split(' ')[0]
 
     if cli_command_keyword in cli_commands_list:
-        print('\nThe command "' + command + '" is supported')
+        print('\nThe command starting with "' + cli_command_keyword + '" is supported')
         command_output = get_output_command_runner(command, device_hostname, dnac_token)
         print('\nThe command output from the device: ' + device_hostname + '\n\n', command_output)
     else:
