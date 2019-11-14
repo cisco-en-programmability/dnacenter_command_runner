@@ -169,7 +169,8 @@ def get_output_command_runner(command, device_name, dnac_jwt_token):
 
 def check_task_id_output(task_id, dnac_jwt_token):
     """
-    This function will check the status of the task with the id {task_id}. Loop one seconds increments until task is completed
+    This function will check the status of the task with the id {task_id}.
+    Loop one seconds increments until task is completed.
     :param task_id: task id
     :param dnac_jwt_token: Cisco DNA Center token
     :return: status - {SUCCESS} or {FAILURE}
@@ -185,7 +186,7 @@ def check_task_id_output(task_id, dnac_jwt_token):
             # check if file id available in output
             file_info = json.loads(task_output['progress'])
             completed = 'yes'
-        except:
+        finally:
             time.sleep(1)
     return task_output
 
