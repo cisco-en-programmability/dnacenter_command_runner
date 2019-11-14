@@ -1,11 +1,13 @@
-# Cisco DNA Center Path Trace
+# Cisco DNA Center Command Runner
 
 
-This Python script will execute a CLI command on a Cisco DNA Center managed device
+This Python script will return the output of a CLI command sent to a Cisco Network Device managed by DNA Center.
+The command will be sent to the device using the Cisco DNA Center Command Runner APIs.
 
 **Cisco Products & Services:**
 
 - Cisco DNA Center
+- Cisco Network Devices Managed by Cisco DNA Center
 
 **Tools & Frameworks:**
 
@@ -15,15 +17,15 @@ This Python script will execute a CLI command on a Cisco DNA Center managed devi
 
 This sample script will execute one CLI command {command} on the device {device_hostname}:
 
-    - obtain a Cisco DNA Center auth token
-    - retrieve the list of commands keywords supported by Cisco DNA Center
-    - identify if the command is supported
-    - execute the command on the specified device
-    - retrieve the file with the command output
+ - obtain a Cisco DNA Center auth token
+ - retrieve the list of commands keywords supported by Cisco DNA Center
+ - identify if the command is supported
+ - execute the command on the specified device
+ - retrieve the file with the command output
     
 - $ python command_runner.py "command" "device_hostname"
 Example:
-python3 command_runner.py "show run int gi0/0" "PDX-9300"
+python command_runner.py "show run int gi0/0" "PDX-9300"
 
 - Sample Output:
 
