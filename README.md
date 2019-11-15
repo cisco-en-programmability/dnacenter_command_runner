@@ -17,9 +17,10 @@ The command will be sent to the device using the Cisco DNA Center Command Runner
 
 This sample script will execute one CLI command {command} on the device {device_hostname}:
 
- - obtain a Cisco DNA Center auth token
+ - obtain the Cisco DNA Center auth token
  - retrieve the list of commands keywords supported by Cisco DNA Center
  - identify if the command is supported
+ - validate if the device is managed by Cisco DNA Center
  - execute the command on the specified device
  - retrieve the file with the command output
 
