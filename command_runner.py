@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 
-Cisco DNA Center Get Auth Token
+Cisco DNA Center Command Runner
 
 Copyright (c) 2019 Cisco and/or its affiliates.
 

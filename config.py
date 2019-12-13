@@ -27,7 +27,7 @@ __license__ = "Cisco Sample Code License, Version 1.1"
 # This file contains the:
 # Cisco DNA Center username and password, server info
 
-# Update this section with the DNA Center server info and user information
+# Update this section with the Cisco DNA Center server info and user information
 
 DNAC_URL = 'https://Cisco DNA Center Server info'
 DNAC_USER = 'username'
