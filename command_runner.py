@@ -74,7 +74,7 @@ def get_all_device_info(dnac_jwt_token):
     :param dnac_jwt_token: Cisco DNA Center token
     :return: Cisco DNA Center device inventory info
     """
-    url = DNAC_URL + '/api/v1/network-device'
+    url = DNAC_URL + '/dna/intent/api/v1/network-device'
     header = {'content-type': 'application/json', 'x-auth-token': dnac_jwt_token}
     all_device_response = requests.get(url, headers=header, verify=False)
     all_device_info = all_device_response.json()
